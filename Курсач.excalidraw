@@ -1,0 +1,261 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {
+      "id": "nR_uaF8Ll3909hiEFpHyU",
+      "type": "text",
+      "x": 254,
+      "y": 223,
+      "width": 738.28125,
+      "height": 408,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "roundness": null,
+      "seed": 1133282787,
+      "version": 603,
+      "versionNonce": 1181522083,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1684694667690,
+      "link": null,
+      "locked": false,
+      "text": "Evolve()\n    Определяем max_generations\n    generation = create_start_generation()\n    Считаем new_cost поколения\n    Цикл для всех поколений\n        Начать\n            Счетчик эпохи++\n            новое поколение = create_new_generation(generation)\n            new_cost = цена текущего поколения\n            \n            если (цена нового) - (цена старого) < epsilon\n                выход из цикла\n            \n            если (цена нового) > (цены старого)\n                max_cost = new_cost\n            \n        Конец",
+      "fontSize": 20,
+      "fontFamily": 3,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 403,
+      "containerId": null,
+      "originalText": "Evolve()\n    Определяем max_generations\n    generation = create_start_generation()\n    Считаем new_cost поколения\n    Цикл для всех поколений\n        Начать\n            Счетчик эпохи++\n            новое поколение = create_new_generation(generation)\n            new_cost = цена текущего поколения\n            \n            если (цена нового) - (цена старого) < epsilon\n                выход из цикла\n            \n            если (цена нового) > (цены старого)\n                max_cost = new_cost\n            \n        Конец",
+      "lineHeight": 1.2
+    },
+    {
+      "id": "oUp5oDLko-YO_E-ePgxPd",
+      "type": "text",
+      "x": 1132,
+      "y": 199,
+      "width": 773.4375,
+      "height": 624,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "8xkKeqaHIqe5v_A_9LMs9"
+      ],
+      "roundness": null,
+      "seed": 1695757325,
+      "version": 812,
+      "versionNonce": 1341398829,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1684697640896,
+      "link": null,
+      "locked": false,
+      "text": "create_new_generation(generation)\n    new_backpacks = []\n    \n    цикл для 2 * максимальное число особей в поколении\n        \n        если (случайное число) <= вероятность мутации\n            create_rand_backpack()\n            добавить в новое поколение \n            в начало цикла\n        \n        род_1, род_2 = 2 случайных рюкзака в поколении(generation)\n        \n        если произошел кроссовер:\n            crossover(род_1, род_2)\n            добавить в новое поколение\n            в начало цикла\n            \n        выбрать лучшего родителя\n            и добавить в новое поколение\n        (провести селекцию)\n        в начало цикла\n\n    выбрать лучшие 2 вида из generation\n    добавить их в поколение\n    отсортировать поколение\n    вернуть Generation(поколение(0:макс_видов))",
+      "fontSize": 20,
+      "fontFamily": 3,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "baseline": 619,
+      "containerId": null,
+      "originalText": "create_new_generation(generation)\n    new_backpacks = []\n    \n    цикл для 2 * максимальное число особей в поколении\n        \n        если (случайное число) <= вероятность мутации\n            create_rand_backpack()\n            добавить в новое поколение \n            в начало цикла\n        \n        род_1, род_2 = 2 случайных рюкзака в поколении(generation)\n        \n        если произошел кроссовер:\n            crossover(род_1, род_2)\n            добавить в новое поколение\n            в начало цикла\n            \n        выбрать лучшего родителя\n            и добавить в новое поколение\n        (провести селекцию)\n        в начало цикла\n\n    выбрать лучшие 2 вида из generation\n    добавить их в поколение\n    отсортировать поколение\n    вернуть Generation(поколение(0:макс_видов))",
+      "lineHeight": 1.2
+    },
+    {
+      "id": "xahjmokGUzoToiSxs_RP1",
+      "type": "arrow",
+      "x": 1272,
+      "y": 404,
+      "width": 126,
+      "height": 113,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [
+        "8xkKeqaHIqe5v_A_9LMs9"
+      ],
+      "roundness": {
+        "type": 2
+      },
+      "seed": 41854285,
+      "version": 195,
+      "versionNonce": 1883403811,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1684697640896,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -126,
+          -13
+        ],
+        [
+          -99,
+          -113
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": null,
+      "endBinding": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "id": "777pBZ5TsNhkrAmwuLtbR",
+      "type": "arrow",
+      "x": 1271,
+      "y": 574,
+      "width": 162,
+      "height": 285,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [
+        "8xkKeqaHIqe5v_A_9LMs9"
+      ],
+      "roundness": {
+        "type": 2
+      },
+      "seed": 312376643,
+      "version": 323,
+      "versionNonce": 65122701,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1684697640896,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -162,
+          -67
+        ],
+        [
+          -98,
+          -285
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": null,
+      "endBinding": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "id": "e9gfjOCVHFzxy4s2YxK28",
+      "type": "arrow",
+      "x": 1226,
+      "y": 695,
+      "width": 147,
+      "height": 407,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [
+        "8xkKeqaHIqe5v_A_9LMs9"
+      ],
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1258173443,
+      "version": 350,
+      "versionNonce": 1769322947,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1684697640896,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -147,
+          -98
+        ],
+        [
+          -54,
+          -407
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": null,
+      "endBinding": null,
+      "startArrowhead": null,
+      "endArrowhead": "arrow"
+    },
+    {
+      "id": "sLyykm9CKFj5AMpulvkS_",
+      "type": "rectangle",
+      "x": 1053,
+      "y": 175,
+      "width": 872,
+      "height": 702,
+      "angle": 0,
+      "strokeColor": "#000000",
+      "backgroundColor": "transparent",
+      "fillStyle": "hachure",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 0,
+      "opacity": 100,
+      "groupIds": [
+        "8xkKeqaHIqe5v_A_9LMs9"
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "seed": 422895277,
+      "version": 143,
+      "versionNonce": 1563293677,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1684697640896,
+      "link": null,
+      "locked": false
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#fffce8"
+  },
+  "files": {}
+}
