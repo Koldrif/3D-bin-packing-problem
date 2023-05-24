@@ -30,10 +30,7 @@ class Item:
         self.incompatible_items = incompatible_items
 
     def can_be_added_to_list(self, compare_items: list):
-
-        if self.id in [i.id for i in compare_items]:
-            return False
-        return True
+        return not any(self.id == i.id for i in compare_items)
 
     def __repr__(self):
         return f'id={self.id}, volume={self.volume}, is_fragile={self.is_fragile}, priority={self.priority},' \
@@ -81,10 +78,10 @@ class Generation:
         self.containers.append(container)
 
     def pop(self, id: uuid.UUID.int):
-        container = next((container for container in self.containers if container.id == id), None)
-        if container is not None:
-            self.containers.remove(container)
-        return container
+        for i, container in enumerate(self.containers):
+            if container.id == id:
+                return self.containers.pop(i)
+        return None
 
 
 
@@ -125,22 +122,12 @@ class GeneticAlgorithm:
         self.epsilon = epsilon
 
     def create_rand_container(self):
-        available_items = self.items
+        available_items = [x for x in self.items if x.volume <= self.max_volume]
         container = Container(max_volume=self.max_volume)
-        while len(available_items) != 0:
-            available_items = list(filter(
-                lambda x: x.volume + container.sum_of_volumes <= self.max_volume ,# x: Item
-                available_items
-            ))
-
-            if len(available_items) == 0:
-                break
-
+        while available_items:
             item = random.choice(available_items)
-
-            if container.add_item(item) is False:
+            if not container.add_item(item):
                 available_items.remove(item)
-
         return container
 
 
