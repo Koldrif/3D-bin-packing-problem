@@ -151,7 +151,7 @@ class Item:
         else:
             dimension = []
 
-        print(dimension)
+        # print(dimension)
         return dimension
 
     def string(self):

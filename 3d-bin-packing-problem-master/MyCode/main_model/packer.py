@@ -450,7 +450,7 @@ class Packer:
 
         # Для каждого ящика помещаем все неупакованные предметы в него
         for bin in self.bins:
-            for unplaced_item in self.unplaced_items:
+            for unplaced_item in bin.unplaced_items:
                 self.pack_to_bin(bin, unplaced_item)
 
             print("\n:::::::::::", bin.string())
