@@ -2,6 +2,10 @@ from decimal import Decimal
 from constants import *
 from item import *
 
+DEFAULT_NUMBER_OF_DECIMALS = 3
+START_POSITION = [0, 0, 0]
+
+
 def get_limit_number_of_decimals(number_of_decimals):
     return Decimal('1.{}'.format('0' * number_of_decimals))
 

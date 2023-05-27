@@ -1,9 +1,10 @@
 from constants import *
-from auxiliary_methods import *
+# from auxiliary_methods import *
+from item import *
 
 
 class Bin:
-    def __init__(self, size, length, width, height, capacity):
+    def __init__(self, size, length, width, height, capacity=99999):
         self.size = size
         self.length = length
         self.width = width

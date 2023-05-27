@@ -1,5 +1,5 @@
 from constants import *
-from auxiliary_methods import *
+# from auxiliary_methods import *
 from item import *
 from bin import *
 
@@ -260,7 +260,7 @@ class Packer:
                         pivot_dict[tuple(pivot)] = distance_3D
 
                 n += 1
-
+        print(pivot_dict)
         return pivot_dict
 
     def pivot_list(self, bin, item):
@@ -425,12 +425,16 @@ class Packer:
             Then, print the optimal bin with highest packing rate.
         """
 
+        # Отформатировать все цифры в Decimal с заданной точностью
         for bin in self.bins:
             bin.format_numbers(number_of_decimals)
 
+        # Тоже самое для всех предметов
         for unplaced_item in self.unplaced_items:
             unplaced_item.format_numbers(number_of_decimals)
 
+        # Сортируем все ящики в порядке возрастания
+        # и предметы в порядке убывания
         self.bins.sort(
             key=lambda bin: bin.get_volume())  # default order of bins: from smallest to biggest
         self.unplaced_items.sort(
@@ -439,10 +443,12 @@ class Packer:
 
         filling_ratio_list = []
 
+        # Помещаем все предметы, как не помещенные во все ящики
         for bin in self.bins:
             for unplaced_item in self.unplaced_items:
                 bin.unplaced_items.append(unplaced_item)
 
+        # Для каждого ящика помещаем все неупакованные предметы в него
         for bin in self.bins:
             for unplaced_item in self.unplaced_items:
                 self.pack_to_bin(bin, unplaced_item)
