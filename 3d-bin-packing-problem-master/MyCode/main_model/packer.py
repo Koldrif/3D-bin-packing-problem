@@ -260,7 +260,6 @@ class Packer:
                         pivot_dict[tuple(pivot)] = distance_3D
 
                 n += 1
-        print(pivot_dict)
         return pivot_dict
 
     def pivot_list(self, bin, item):
@@ -400,7 +399,7 @@ class Packer:
             if not response:
                 bin.unfitted_items.append(item)
 
-            return
+            return response
 
         else:
             pivot_point = self.choose_pivot_point(bin, item)
@@ -408,11 +407,11 @@ class Packer:
 
             if not pivot_point:
                 bin.unfitted_items.append(item)
-                return
+                return False
 
             distance_3D = pivot_dict[tuple(pivot_point)]
             response = bin.put_item(item, pivot_point, distance_3D)
-            return
+            return response
 
     def pack(
             self, bigger_first=True, number_of_decimals=DEFAULT_NUMBER_OF_DECIMALS):

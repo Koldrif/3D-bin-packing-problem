@@ -1,6 +1,8 @@
 import random
 from copy import deepcopy
 
+class BackpackFactoryParallelLauncher:
+    pass
 class BackpackFactory:
     """
     Завод по укладыванию вещей в рюкзаки.

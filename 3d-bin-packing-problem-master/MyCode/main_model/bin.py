@@ -4,7 +4,7 @@ from item import *
 
 
 class Bin:
-    def __init__(self, size, length, width, height, capacity=99999):
+    def __init__(self, size: str, length, width, height, capacity=99999):
         self.size = size
         self.length = length
         self.width = width
@@ -34,6 +34,13 @@ class Bin:
             total_weight += item.weight
 
         return set_to_decimal(total_weight, self.number_of_decimals)
+
+    def get_filled_volume(self) -> float:
+        result = sum(item.get_volume() for item in self.items)
+        return result
+
+    def cost(self) -> float:
+        return self.get_filled_volume()
 
     def get_filling_ratio(self):
         total_filling_volume = 0
@@ -90,7 +97,7 @@ class Bin:
 
         return rotation_type_list
 
-    def put_item(self, item, pivot, distance_3d):
+    def put_item(self, item, pivot, distance_3d) -> bool:
         """Evaluate whether an item can be placed into a certain bin with which orientation. If yes, perform put action.
         Args:
             item: any item in item list.
@@ -202,6 +209,11 @@ class Bin:
                         p += 1
 
     def string(self):
+        return "%s(%sx%sx%s, max_weight:%s) vol(%s) item_number(%s) filling_ratio(%s)" % (
+            self.size, self.length, self.width, self.height, self.capacity,
+            self.get_volume(), self.total_items, self.get_filling_ratio())
+
+    def __repr__(self):
         return "%s(%sx%sx%s, max_weight:%s) vol(%s) item_number(%s) filling_ratio(%s)" % (
             self.size, self.length, self.width, self.height, self.capacity,
             self.get_volume(), self.total_items, self.get_filling_ratio())

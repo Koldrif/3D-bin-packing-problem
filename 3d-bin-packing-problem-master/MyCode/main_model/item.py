@@ -131,7 +131,7 @@ class Item:
         self.weight = set_to_decimal(self.weight, number_of_decimals)
         self.number_of_decimals = number_of_decimals
 
-    def get_volume(self):
+    def get_volume(self) -> Decimal:
         return set_to_decimal(
             self.length * self.height * self.width, self.number_of_decimals)
 
@@ -155,6 +155,12 @@ class Item:
         return dimension
 
     def string(self):
+        return "%s(%sx%sx%s, weight: %s) pos(%s) rt(%s) vol(%s)" % (
+            self.name, self.length, self.width, self.height, self.weight,
+            self.position, self.rotation_type, self.get_volume()
+        )
+
+    def __repr__(self):
         return "%s(%sx%sx%s, weight: %s) pos(%s) rt(%s) vol(%s)" % (
             self.name, self.length, self.width, self.height, self.weight,
             self.position, self.rotation_type, self.get_volume()
