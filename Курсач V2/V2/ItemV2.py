@@ -3,6 +3,7 @@ import functools
 
 class Cuboid:
     # a rectangular solid
+    cuboids_created = []
     def __init__(self, x0, y0, z0, x1, y1, z1):
 
         self.z0 = min(z0, z1)
@@ -15,6 +16,7 @@ class Cuboid:
         self.start = (self.x0, self.y0, self.z0)
         self.end = (self.x1, self.y1, self.z1)
 
+
     def centre(self):
         center_x = (self.x0 + self.x1) / 2
         center_y = (self.y0 + self.y1) / 2
@@ -24,7 +26,9 @@ class Cuboid:
     def intersects(self, other):
         # returns true if this cuboid intersects with another one
         if self == other:
+            # raise Exception
             return True
+
         else:
             return (
                     self.x0 <= other.x1
@@ -41,10 +45,15 @@ class Item:
                  length: float,
                  width: float,
                  height: float,
-                 pivot_point: Vector = Vector.Vector3D(0, 0, 0)):
+                 name: str,
+                 weight: float = 10,
+                 pivot_point: Vector = Vector.Vector3D(0, 0, 0),
+                 is_fragile: bool = False,
+                 ):
         self.length = length
         self.width = width
         self.height = height
+        self.name = name
 
         self.pivot_point = pivot_point
 
@@ -54,12 +63,18 @@ class Item:
 
 
     @functools.cached_property
+    # @property
     def volume(self):
         return self.height * self.width * self.length
 
     @functools.cache
-    def to_cuboid(self, pivot_point, rotation) -> Cuboid:
+    def to_cuboid(self, pivot_point: Vector.Vector3D, rotation) -> Cuboid:
+        pivot = pivot_point.vector
+        end = pivot_point + rotation(Vector.Vector3D(*self.vector))
         return Cuboid(
             *pivot_point.vector,
-            *rotation(Vector.Vector3D(*self.vector)).vector)
+            *(pivot_point + rotation(Vector.Vector3D(*self.vector))).vector)
+
+    def __repr__(self):
+        return f'Length {self.length}, Width {self.width}, Height {self.height}'
 

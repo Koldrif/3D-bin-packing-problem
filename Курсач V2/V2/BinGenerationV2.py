@@ -1,3 +1,5 @@
+import functools
+
 from BinV2 import BinV2
 
 class BinGenerationV2:
@@ -11,9 +13,9 @@ class BinGenerationV2:
     '''
     # TODO: Add penalties
     # TODO: Maybe need make this property cached
-    @property
+    @functools.cached_property
+    # @property
     def cost(self):
         return \
-            sum(bin_in_generation.filled_space
-                   + len(bin_in_generation.items)
-                for bin_in_generation in self.bins)
+            sum(bin_in_generation.cost
+                for bin_in_generation in self.bins) / len(self.bins)

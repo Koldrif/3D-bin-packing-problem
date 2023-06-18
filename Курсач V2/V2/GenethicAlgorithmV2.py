@@ -1,3 +1,5 @@
+import random
+
 from BinV2 import *
 from BinGenerationV2 import *
 from enum import Enum
@@ -28,7 +30,8 @@ class GeneticAlgorithmV2:
             items: list[Item] = None,
             bins: list[BinV2] = None,
             max_items: int = 100,
-            max_population_size: int = 1
+            max_population_size: int = 1,
+            crossover_type: CrossoverType = CrossoverType.genome_shuffle
     ):
         self.items = items  # list['Item']
         self.max_items = max_items
@@ -49,6 +52,7 @@ class GeneticAlgorithmV2:
 
         # Additional info
         self.current_generation = None
+        self.crossover_type = crossover_type
 
         # Счетчик пройденных эпох
         self.epochs_evolved = 0
@@ -119,14 +123,18 @@ class GeneticAlgorithmV2:
                     self.length,
                     self.width,
                     self.height)
+
+        start = time.time()
         if crossover_type == CrossoverType.single_point:
             raise NotImplementedError()
         elif crossover_type == CrossoverType.two_point:
             raise NotImplementedError()
         elif crossover_type == CrossoverType.genome_shuffle:
-            genome_mart = parent_1.items + parent_2.items
-            raise NotImplementedError()
-
+            genome_mart = list(set(parent_1.items + parent_2.items))
+            random.shuffle(genome_mart)
+            for item_in_mart in genome_mart:
+                child.try_pack(item_in_mart)
+            # raise NotImplementedError()
         elif crossover_type == CrossoverType.head_back:
             head = sorted(parent_1.items,
                           key=lambda item: item.volume,
@@ -139,24 +147,20 @@ class GeneticAlgorithmV2:
 
             while len(head) != 0 or len(back) != 0:
                 if len(head) != 0:
-                    # head_item = head[0]
-                    # packer.pack_to_bin(child, head_item)
-                    # head.remove(head_item)
                     head_item = head.pop()
                     child.try_pack(head_item)
                 if len(back) != 0:
-                    # back_item = back[-1]
-                    # packer.pack_to_bin(child, back_item)
-                    # back.remove(back_item)
                     back_item = back.pop()
                     child.try_pack(back_item)
 
         # Generate unique names for bins
         self.child_bins += 1
+
         return child
 
     def create_new_generation(self, generation: BinGenerationV2):
         new_bins = []
+
         for _ in range(2 * self.max_population_size):
             if random.random() <= self.mutation_probability:
                 new_bins.append(BinV2(
@@ -169,15 +173,15 @@ class GeneticAlgorithmV2:
             parent_1, parent_2 = random.sample(generation.bins, k=2)
 
             if random.random() <= self.crossover_probability:
-                crossovered_bin = self.crossover(parent_1, parent_2)
+                crossovered_bin = self.crossover(parent_1, parent_2, crossover_type=self.crossover_type)
                 new_bins.append(crossovered_bin)
+
 
 
         alpha_best = sorted(
             generation.bins,
             key=lambda bin_in_prev_gen: bin_in_prev_gen.cost,
             reverse=True)[:self.alpha]
-
 
         new_bins.extend(alpha_best)
         new_bins = sorted(new_bins,
@@ -188,6 +192,7 @@ class GeneticAlgorithmV2:
 
     def run(self):
         """Starts GA"""
+        ga_start_time = time.time()
 
         if len(self.generations) == 0:
             self.generations.append(self.create_initial_population())
@@ -195,7 +200,8 @@ class GeneticAlgorithmV2:
         max_cost = self.last_generation.cost
 
         for i in range(1, self.max_generations):
-            start = time.time()
+        # while True:
+            # start = time.time()
             # Count how many epochs was
             self.best_scores.append(max_cost)
             self.epochs_evolved += 1
@@ -206,16 +212,21 @@ class GeneticAlgorithmV2:
                 crossover,
                 selection
             """
+            # start = time.time()
             self.create_new_generation(self.last_generation)
+            # print("Time spent on generation: ", time.time() - start)
 
             """
             Print some info:
                 every 10 generations:
                     print Generation max_cost
             """
-            # if self.epochs_evolved % 10 == 0:
-            print(f"Generation {self.epochs_evolved} cost: {self.last_generation.cost}")
-            print("time spend:", time.time() - start)
+            if self.epochs_evolved % 10 == 0:
+                print(f"Generation {self.epochs_evolved} cost: {self.last_generation.cost}")
+                best_bin = sorted(self.last_generation.bins,
+                              key=lambda container: container.cost)[-1]
+                print('Best bin in generation cost: ', best_bin.cost)
+            # print("time spend:", time.time() - start)
 
             # if (abs(self.last_generation.cost - self.generations[-2].cost) < self.epsilon):
             #     print(f"Generation {self.epochs_evolved} -- exit")
@@ -224,7 +235,10 @@ class GeneticAlgorithmV2:
             if self.last_generation.cost > max_cost:
                 max_cost = self.last_generation.cost
 
+
         best_bin = sorted(self.last_generation.bins,
-                          key= lambda container:  sum(container.filled_space
-                   + len(container.items)))
+                          key= lambda container:  container.cost)[-1]
+
+
+        print('Time spent: ', time.time() - ga_start_time)
         return best_bin, self.best_scores
